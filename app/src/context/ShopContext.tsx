@@ -2,9 +2,9 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { products as initialProducts } from "@/lib/data";
-import type { CartItem, Order, OrderStatus, Profile, Product, Message } from "@/lib/types";
+import type { CartItem, Order, OrderStatus, Profile, Product, Message, RegisteredUser } from "@/lib/types";
 
-type UserRole = "customer" | "admin" | "rider" | null;
+export type UserRole = "customer" | "admin" | "rider" | null;
 
 type ShopContextType = {
   products: Product[];
@@ -15,6 +15,7 @@ type ShopContextType = {
   lowStockAlert: string | null;
   currentUserRole: UserRole;
   username: string | null;
+  registeredUsers: RegisteredUser[];
   upsertProduct: (product: Product) => void;
   addToCart: (productId: string, quantity: number, note?: string, wrap?: string) => void;
   removeFromCart: (productId: string) => void;
@@ -25,7 +26,7 @@ type ShopContextType = {
     deliveryAddress: string,
     contactPhone: string,
     deliveryOption: "Standard" | "Express" | "Same-day",
-    paymentMethod: "Credit Card" | "PayPal" | "Cash on Delivery",
+    paymentMethod: "GCash" | "Cash on Delivery",
     deliveryLatLng?: { lat: number; lng: number } | null,
   ) => void;
   sendMessage: (text: string, from: "customer" | "admin") => void;
@@ -52,6 +53,7 @@ const defaultValue = {
   lowStockAlert: null,
   currentUserRole: null,
   username: null,
+  registeredUsers: [],
   upsertProduct: () => {},
   addToCart: () => {},
   removeFromCart: () => {},
@@ -94,6 +96,10 @@ export const ShopProvider = ({ children }: { children: React.ReactNode }) => {
   const [lowStockAlert, setLowStockAlert] = useState<string | null>(null);
   const [currentUserRole, setCurrentUserRole] = useState<UserRole>(null);
   const [username, setUsername] = useState<string | null>(null);
+  const [registeredUsers, setRegisteredUsers] = useState<RegisteredUser[]>(() => {
+    const stored = typeof window !== "undefined" ? localStorage.getItem("vv_users") : null;
+    return stored ? JSON.parse(stored) : [];
+  });
 
   useEffect(() => {
     localStorage.setItem("vv_products", JSON.stringify(products));
@@ -114,6 +120,10 @@ export const ShopProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     localStorage.setItem("vv_messages", JSON.stringify(messages));
   }, [messages]);
+
+  useEffect(() => {
+    localStorage.setItem("vv_users", JSON.stringify(registeredUsers));
+  }, [registeredUsers]);
 
   const upsertProduct = useCallback((product: Product) => {
     setProducts((prev) => {
@@ -182,7 +192,7 @@ export const ShopProvider = ({ children }: { children: React.ReactNode }) => {
     deliveryAddress: string,
     contactPhone: string,
     deliveryOption: "Standard" | "Express" | "Same-day",
-    paymentMethod: "Credit Card" | "PayPal" | "Cash on Delivery",
+    paymentMethod: "GCash" | "Cash on Delivery",
     deliveryLatLng?: { lat: number; lng: number } | null,
   ) => {
     if (cart.length === 0) {
@@ -297,6 +307,13 @@ export const ShopProvider = ({ children }: { children: React.ReactNode }) => {
   const signIn = (name: string, role: UserRole) => {
     setUsername(name);
     setCurrentUserRole(role);
+    // Auto-register if not exists
+    setRegisteredUsers((prev) => {
+      if (!prev.some((u) => u.username === name)) {
+        return [{ username: name, role: role as "customer" | "admin" | "rider", createdAt: new Date().toISOString() }, ...prev];
+      }
+      return prev;
+    });
   };
 
   const signOut = () => {
@@ -305,9 +322,14 @@ export const ShopProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signUp = (name: string, role: UserRole) => {
-    // no backend; direct sign-in after sign-up
     setUsername(name);
     setCurrentUserRole(role);
+    setRegisteredUsers((prev) => {
+      if (!prev.some((u) => u.username === name)) {
+        return [{ username: name, role: role as "customer" | "admin" | "rider", createdAt: new Date().toISOString() }, ...prev];
+      }
+      return prev;
+    });
   };
 
   const value = useMemo(
@@ -320,6 +342,7 @@ export const ShopProvider = ({ children }: { children: React.ReactNode }) => {
       lowStockAlert,
       currentUserRole,
       username,
+      registeredUsers,
       upsertProduct,
       addToCart,
       removeFromCart,
@@ -334,7 +357,7 @@ export const ShopProvider = ({ children }: { children: React.ReactNode }) => {
       signOut,
       signUp,
     }),
-    [products, cart, orders, profile, messages, lowStockAlert, currentUserRole, username, upsertProduct],
+    [products, cart, orders, profile, messages, lowStockAlert, currentUserRole, username, registeredUsers, upsertProduct],
   );
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;

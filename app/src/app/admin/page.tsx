@@ -7,8 +7,9 @@ import { BouquetHeroIllustration } from "@/components/admin/AdminIllustration";
 import { BestSellerBouquets, DeviceTypeDonut, InventoryStockWarnings, MiniStat, MonthlyRevenueBars, SalesLineChart } from "@/components/admin/AdminCharts";
 
 export default function AdminPage() {
-  const { products, orders, profile, lowStockAlert, currentUserRole, messages, sendMessage } = useShop();
+  const { products, orders, profile, lowStockAlert, currentUserRole, messages, sendMessage, registeredUsers } = useShop();
   const [reply, setReply] = useState("");
+  const [showUsersModal, setShowUsersModal] = useState(false);
 
   if (currentUserRole !== "admin") {
     return (
@@ -153,7 +154,7 @@ export default function AdminPage() {
                     <div className="rounded-2xl border border-pink-200 bg-[#fffaf5] p-4">
                       <p className="text-xs font-semibold text-pink-700/80">Today’s Sales</p>
                       <p className="mt-2 text-xl font-bold text-pink-800">
-                        ${todaysSales.toFixed(0)}
+                        ₱{todaysSales.toFixed(0)}
                       </p>
                       <p className="mt-1 text-xs text-pink-700/80">{todaysOrders.length} orders</p>
                     </div>
@@ -174,11 +175,13 @@ export default function AdminPage() {
               </div>
 
               <div className="grid gap-4 lg:col-span-5">
-                <MiniStat
-                  label="Total Users"
-                  value={uniqueUsers > 0 ? uniqueUsers.toLocaleString() : "—"}
-                  subValue={orders.length > 0 ? "Unique buyer emails in orders" : "No order data yet"}
-                />
+                <div onClick={() => setShowUsersModal(true)} className="cursor-pointer transition-transform hover:scale-[1.02]">
+                  <MiniStat
+                    label="Total Users"
+                    value={registeredUsers.length > 0 ? registeredUsers.length.toLocaleString() : "0"}
+                    subValue={registeredUsers.length > 0 ? "Registered accounts system-wide" : "No accounts yet"}
+                  />
+                </div>
                 <MiniStat
                   label="Total Orders"
                   value={orders.length.toLocaleString()}
@@ -262,6 +265,48 @@ export default function AdminPage() {
           </div>
         </div>
       </section>
+
+      {showUsersModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm" onClick={() => setShowUsersModal(false)}>
+          <div className="max-h-[80vh] w-full max-w-2xl overflow-hidden rounded-3xl bg-white shadow-xl" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between border-b border-pink-100 bg-pink-50/50 p-5">
+              <div>
+                <h3 className="text-xl font-bold text-pink-800">System Logins</h3>
+                <p className="text-sm text-pink-600">All registered users.</p>
+              </div>
+              <button className="rounded-full bg-pink-100 px-3 py-1 font-bold text-pink-700 hover:bg-pink-200" onClick={() => setShowUsersModal(false)}>
+                ✕
+              </button>
+            </div>
+            <div className="overflow-y-auto p-5 max-h-[60vh]">
+              {registeredUsers.length === 0 ? (
+                <p className="text-pink-600">No registered users yet.</p>
+              ) : (
+                <table className="w-full text-left text-sm text-pink-800">
+                  <thead className="bg-pink-50 text-xs text-pink-600">
+                    <tr>
+                      <th className="rounded-l-lg px-4 py-3 font-semibold">Username</th>
+                      <th className="px-4 py-3 font-semibold">Role</th>
+                      <th className="rounded-r-lg px-4 py-3 font-semibold">Created At</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {registeredUsers.map((u, i) => (
+                      <tr key={i} className="border-b border-pink-50 last:border-0 hover:bg-pink-50/50">
+                        <td className="px-4 py-3 font-medium">{u.username}</td>
+                        <td className="px-4 py-3 capitalize">{u.role}</td>
+                        <td className="px-4 py-3 text-pink-600">
+                          {new Date(u.createdAt).toLocaleDateString()} {new Date(u.createdAt).toLocaleTimeString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

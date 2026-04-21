@@ -89,11 +89,11 @@ export default function Home() {
               <div className="absolute inset-0 rounded-[2rem] bg-pink-200 blur-3xl" />
               <div className="relative rounded-[2rem] border border-pink-100 bg-white p-5 shadow-xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1524594154908-7ad1c0f8ed43?auto=format&fit=crop&w=900&q=80"
+                  src="/hero-bouquet.jpg"
                   alt="Signature bouquet"
                   width={700}
                   height={500}
-                  className="h-72 w-full rounded-xl object-cover"
+                  className="h-96 w-full rounded-xl object-cover object-top"
                 />
                 <div className="mt-3 flex items-center justify-between">
                   <div>
@@ -115,7 +115,7 @@ export default function Home() {
             <article key={product.id} className="group rounded-3xl border border-pink-200 bg-white p-4 shadow-sm transition hover:shadow-lg">
               <div className="relative h-48 overflow-hidden rounded-2xl border border-pink-100">
                 <Image
-                  src={`https://images.unsplash.com/featured/?${encodeURIComponent(product.name)}&w=1000&q=90`}
+                  src={product.image}
                   alt={product.name}
                   fill
                   sizes="(max-width: 768px) 100vw, 25vw"
@@ -125,7 +125,7 @@ export default function Home() {
               <h3 className="mt-3 text-xl font-bold text-pink-800">{product.name}</h3>
               <p className="mt-1 text-sm text-pink-600">{product.description}</p>
               <div className="mt-3 flex items-center justify-between">
-                <p className="text-lg font-bold text-pink-700">${product.price.toFixed(2)}</p>
+                <p className="text-lg font-bold text-pink-700">₱{product.price.toFixed(2)}</p>
                 <button
                   onClick={() => addToCart(product.id, 1, "Happy Day", "Classic")}
                   className="rounded-full bg-pink-600 px-3 py-1 text-sm font-semibold text-white transition hover:bg-pink-700"

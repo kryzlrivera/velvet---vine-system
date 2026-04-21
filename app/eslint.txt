@@ -1,0 +1,82 @@
+[0m[0m
+[0m[4mC:\velvet-vine-system\app\src\app\admin\inventory\page.tsx[24m[0m
+[0m  [2m139:16[22m  [31merror[39m  React Hook "useMemo" is called conditionally. React Hooks must be called in the exact same order in every component render  [2mreact-hooks/rules-of-hooks[22m[0m
+[0m[0m
+[0m[4mC:\velvet-vine-system\app\src\app\cart\page.tsx[24m[0m
+[0m  [2m62:118[22m  [31merror[39m  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  [2m@next/next/no-html-link-for-pages[22m[0m
+[0m[0m
+[0m[4mC:\velvet-vine-system\app\src\app\page.tsx[24m[0m
+[0m  [2m14:5[22m   [33mwarning[39m  'removeFromCart' is assigned a value but never used       [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m15:5[22m   [33mwarning[39m  'updateCartQty' is assigned a value but never used        [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m16:5[22m   [33mwarning[39m  'updateCartItem' is assigned a value but never used       [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m17:5[22m   [33mwarning[39m  'placeOrder' is assigned a value but never used           [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m18:5[22m   [33mwarning[39m  'lowStockAlert' is assigned a value but never used        [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m19:5[22m   [33mwarning[39m  'messages' is assigned a value but never used             [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m20:5[22m   [33mwarning[39m  'sendMessage' is assigned a value but never used          [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m23:28[22m  [33mwarning[39m  'setSelectedCategory' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m24:10[22m  [33mwarning[39m  'note' is assigned a value but never used                 [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m24:16[22m  [33mwarning[39m  'setNote' is assigned a value but never used              [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m25:10[22m  [33mwarning[39m  'wrap' is assigned a value but never used                 [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m25:16[22m  [33mwarning[39m  'setWrap' is assigned a value but never used              [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m26:10[22m  [33mwarning[39m  'deliveryAddress' is assigned a value but never used      [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m26:27[22m  [33mwarning[39m  'setDeliveryAddress' is assigned a value but never used   [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m27:10[22m  [33mwarning[39m  'contactPhone' is assigned a value but never used         [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m27:24[22m  [33mwarning[39m  'setContactPhone' is assigned a value but never used      [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m28:10[22m  [33mwarning[39m  'messageText' is assigned a value but never used          [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m28:23[22m  [33mwarning[39m  'setMessageText' is assigned a value but never used       [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m30:9[22m   [33mwarning[39m  'categories' is assigned a value but never used           [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m48:9[22m   [33mwarning[39m  'cartTotal' is assigned a value but never used            [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\velvet-vine-system\app\src\app\rider\page.tsx[24m[0m
+[0m  [2m22:9[22m  [33mwarning[39m  'completedOrders' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\velvet-vine-system\app\src\components\SiteHeader.tsx[24m[0m
+[0m  [2m18:13[22m  [33mwarning[39m  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  [2m@next/next/no-img-element[22m[0m
+[0m[0m
+[0m[4mC:\velvet-vine-system\app\src\context\ShopContext.tsx[24m[0m
+[0m  [2m314:5[22m  [31merror[39m    Compilation Skipped: Existing memoization could not be preserved[0m
+[0m[0m
+[0mReact Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `addToCart`, but the source dependencies were [products, cart, orders, profile, messages, lowStockAlert, currentUserRole, username, upsertProduct]. Inferred different dependency than source.[0m
+[0m[0m
+[0mC:\velvet-vine-system\app\src\context\ShopContext.tsx:314:5[0m
+[0m  312 |[0m
+[0m  313 |   const value = useMemo([0m
+[0m> 314 |     () => ({[0m
+[0m      |     ^^^^^^^^[0m
+[0m> 315 |       products,[0m
+[0m      | ^^^^^^^^^^^^^^^[0m
+[0m> 316 |       cart,[0m
+[0m      …[0m
+[0m      | ^^^^^^^^^^^^^^^[0m
+[0m> 335 |       signUp,[0m
+[0m      | ^^^^^^^^^^^^^^^[0m
+[0m> 336 |     }),[0m
+[0m      | ^^^^^^^ Could not preserve existing manual memoization[0m
+[0m  337 |     [products, cart, orders, profile, messages, lowStockAlert, currentUserRole, username, upsertProduct],[0m
+[0m  338 |   );[0m
+[0m  339 |   [2mreact-hooks/preserve-manual-memoization[22m[0m
+[0m  [2m314:5[22m  [31merror[39m    Compilation Skipped: Existing memoization could not be preserved[0m
+[0m[0m
+[0mReact Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `placeOrder`, but the source dependencies were [products, cart, orders, profile, messages, lowStockAlert, currentUserRole, username, upsertProduct]. Inferred different dependency than source.[0m
+[0m[0m
+[0mC:\velvet-vine-system\app\src\context\ShopContext.tsx:314:5[0m
+[0m  312 |[0m
+[0m  313 |   const value = useMemo([0m
+[0m> 314 |     () => ({[0m
+[0m      |     ^^^^^^^^[0m
+[0m> 315 |       products,[0m
+[0m      | ^^^^^^^^^^^^^^^[0m
+[0m> 316 |       cart,[0m
+[0m      …[0m
+[0m      | ^^^^^^^^^^^^^^^[0m
+[0m> 335 |       signUp,[0m
+[0m      | ^^^^^^^^^^^^^^^[0m
+[0m> 336 |     }),[0m
+[0m      | ^^^^^^^ Could not preserve existing manual memoization[0m
+[0m  337 |     [products, cart, orders, profile, messages, lowStockAlert, currentUserRole, username, upsertProduct],[0m
+[0m  338 |   );[0m
+[0m  339 |  [2mreact-hooks/preserve-manual-memoization[22m[0m
+[0m  [2m337:5[22m  [33mwarning[39m  React Hook useMemo has missing dependencies: 'addToCart', 'placeOrder', and 'updateCartQty'. Either include them or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[31m[1m✖ 27 problems (4 errors, 23 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m

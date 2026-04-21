@@ -30,7 +30,7 @@ export default function OrdersPage() {
                 <p className="mt-1 text-sm text-pink-500">Contact: {order.contactPhone}</p>
                 <p className="mt-1 text-sm text-pink-500">Delivery Option: {order.deliveryOption}</p>
                 <p className="mt-1 text-sm text-pink-500">Payment: {order.paymentMethod}</p>
-                <p className="mt-2 font-semibold text-pink-700">Total: ${order.total.toFixed(2)}</p>
+                <p className="mt-2 font-semibold text-pink-700">Total: ₱{order.total.toFixed(2)}</p>
                 <ul className="mt-2 space-y-1 text-sm text-pink-600">
                   {order.items.map((item) => (
                     <li key={`${item.productId}-${item.note ?? item.wrap}`}> 

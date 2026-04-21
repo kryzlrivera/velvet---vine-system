@@ -348,7 +348,7 @@ export default function AdminInventoryPage() {
               </label>
 
               <label className="space-y-1">
-                <span className="text-xs font-semibold text-pink-800">Price ($)</span>
+                <span className="text-xs font-semibold text-pink-800">Price (₱)</span>
                 <input
                   value={form.price}
                   onChange={(e) => setForm((s) => ({ ...s, price: e.target.value }))}

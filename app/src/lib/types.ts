@@ -30,7 +30,7 @@ export type Order = {
   deliveryLng?: number;
   contactPhone: string;
   deliveryOption: "Standard" | "Express" | "Same-day";
-  paymentMethod: "Credit Card" | "PayPal" | "Cash on Delivery";
+  paymentMethod: "GCash" | "Cash on Delivery";
   mapsUrl: string;
   customerName: string;
   customerEmail: string;
@@ -41,6 +41,12 @@ export type Profile = {
   email: string;
   phone: string;
   address: string;
+};
+
+export type RegisteredUser = {
+  username: string;
+  role: "customer" | "admin" | "rider";
+  createdAt: string;
 };
 
 export type Message = {

@@ -36,7 +36,7 @@ export default function CartPage() {
   const { cart, products, removeFromCart, updateCartQty, updateCartItem, placeOrder } = useShop();
   const [showDelivery, setShowDelivery] = useState(false);
   const [deliveryOption, setDeliveryOption] = useState("Standard");
-  const [paymentMethod, setPaymentMethod] = useState<"Credit Card" | "PayPal" | "Cash on Delivery">("Credit Card");
+  const [paymentMethod, setPaymentMethod] = useState<"GCash" | "Cash on Delivery">("Cash on Delivery");
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [contactPhone, setContactPhone] = useState("");
   const [mapInput, setMapInput] = useState("");
@@ -75,8 +75,8 @@ export default function CartPage() {
                   </div>
                   <div className="sm:col-span-1">
                     <h2 className="text-lg font-bold text-pink-700">{entry.product?.name}</h2>
-                    <p className="text-sm text-pink-600">${entry.product?.price.toFixed(2)}</p>
-                    <p className="text-sm text-pink-600">Subtotal: ${(entry.product?.price ?? 0) * entry.item.quantity}</p>
+                    <p className="text-sm text-pink-600">₱{entry.product?.price.toFixed(2)}</p>
+                    <p className="text-sm text-pink-600">Subtotal: ₱{(entry.product?.price ?? 0) * entry.item.quantity}</p>
                   </div>
                   <div className="sm:col-span-1">
                     <div className="flex items-center gap-2">
@@ -128,7 +128,7 @@ export default function CartPage() {
             <article className="rounded-2xl border border-pink-200 bg-white p-4 shadow-sm">
               <h2 className="text-xl font-bold text-pink-700">Order Summary</h2>
               <p className="mt-2 text-base text-pink-700">Total Items: {totalItems}</p>
-              <p className="text-2xl font-bold text-pink-800">Total: ${cartTotal.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-pink-800">Total: ₱{cartTotal.toFixed(2)}</p>
 
               {!showDelivery ? (
                 <div className="mt-4">
@@ -276,11 +276,10 @@ export default function CartPage() {
                     <span className="text-sm font-medium text-pink-600">Payment Method</span>
                     <select
                       value={paymentMethod}
-                      onChange={(e) => setPaymentMethod(e.target.value as "Credit Card" | "PayPal" | "Cash on Delivery")}
+                      onChange={(e) => setPaymentMethod(e.target.value as "GCash" | "Cash on Delivery")}
                       className="mt-1 w-full rounded-lg border border-pink-300 px-3 py-2"
                     >
-                      <option value="Credit Card">Credit Card</option>
-                      <option value="PayPal">PayPal</option>
+                      <option value="GCash">GCash</option>
                       <option value="Cash on Delivery">Cash on Delivery</option>
                     </select>
                   </label>
@@ -295,6 +294,12 @@ export default function CartPage() {
                         deliveryLatLng,
                       );
                       setShowDelivery(false);
+                      if (paymentMethod === "GCash") {
+                        // Redirect to GCash app with amount and number
+                        window.location.href = `gcash://pay?number=09934649794&amount=${cartTotal.toFixed(2)}`;
+                        // Fallback message in case they don't have the app installed
+                        setTimeout(() => alert("If the GCash app didn't open, please manually send " + cartTotal.toFixed(2) + " to 09934649794"), 1500);
+                      }
                     }}
                     disabled={!deliveryAddress || !contactPhone}
                   >

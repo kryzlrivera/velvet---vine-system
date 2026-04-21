@@ -1,0 +1,13 @@
+﻿{
+    "name": "velvet-vine/shop",
+    "description": "Velvet Vine Flower Shop - Laravel 8",
+    "require": {
+        "php": "^7.3|^8.0",
+        "laravel/framework": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
